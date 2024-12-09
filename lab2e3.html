@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Module #4 Lab 2 Exercise #2</title>
+        <style>
+            body {
+            font-family : Arial, Helvetica , sans-serif ;
+            background-color : #e3f2fd;
+            }
+            .card {
+            padding: 10px;
+            }
+            .card-title {
+            font-weight : 600;
+            font-size : 3em;
+            padding: 0 0 10px 0;
+            }
+            .card-description {
+            font-weight : 400;
+            font-size : 2em
+            }
+        </style>
+    </head>
+    <body>
+        <template id="card-template" >
+            <div class="card">
+                <div class="card-body" >
+                    <div class="card-title" ></div>
+                    <div class="card-text" ></div>
+                </div>
+            </div>
+        </template >
+        <div id="card-list" ></div>
+        <template id = "portfolio-template">
+            <div>
+         <div class = "portfolio-item-title"></div>
+         <img class="portfolio-item-image" width="500" height="350"/>
+        </div>
+        </template>    
+         
+    
+    <script>
+        const artist = {
+            name: "Van Gogh",
+            portfolio: [
+                {title: "portrait", url: "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436532/1671316/main-image"},
+                {title: "sky", url:"https://mymodernmet.com/wp/wp-content/uloads/2020/11/White-house-night-van-goh-worldwide-2.jpg"}
+            ]
+        }
+
+        const artists = [{
+            name: "Van Gogh",
+            portfolio: [
+                {title: "portrait", url: "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436532/1671316/main-image"},
+                {title: "sky", url:"https://mymodernmet.com/wp/wp-content/uloads/2020/11/White-house-night-van-goh-worldwide-2.jpg" }
+            ]},
+        {
+            name: "Banksys",
+            portfolio: [
+                {title: "heart", url: "https://cdn.britannica.com/72/202072-050-EDA415E9/Girl-with-Balloon-Banksy-Waterloo-Bridge-London.jpg"},
+                {title: "banana", url:"https://cdn.sanity.io/images/fvhcpakg/production/65f5493b7992d62a1017c9eef1aacf4700660f8e-1024x713.jpg?auto=format&q=60&w=1024" }
+            ]}]
+
+function addArtist(title, text) {
+                const template = document.getElementById("artist-template").content.cloneNode(true);
+                template.querySelector('.card-title').innerText = title;
+                portfolio.forEach(item => {
+                    const template = document.getElementById("portfolio-template")
+                    template.querySelector('.portfolio-item-title').innerText = title;
+                    template.querySelector('.portfolio-item-image').src = item-url;
+                    template.querySelector('.portfolio-item-image').alt = item.title;
+                })
+                document.querySelector('#card-list').appendChild(template);
+
+                addArtist(artist.name, artist.portfolio)
+                artist.forEach(artist => addArtist(artist.name, artist.portfolio))
+}
+
+        const data = [{name: 'Bob', age: 23}, {name: 'Alice', age: 39}, {name: 'Ali', age: 55}]
+            function addCard(title, text) {
+                const template = document.getElementById("card-template").content.cloneNode(true);
+                template.querySelector('.card-title').innerText = title;
+                template.querySelector('.card-text').innerText = text; 
+                document.querySelector('#card-list').appendChild(template);
+            }
+
+            
+
+
+            data.forEach(item => addCard(item.name, item.age))
+        </script>
+    </body>
+</html>

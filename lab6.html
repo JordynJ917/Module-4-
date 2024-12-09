@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <template id="card-template">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Item Title</h5>
+                    <p class="card-text">Item Body</p>
+                </div>
+            </div>
+        </div>
+    </template>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Lab 6</title>
+</head>
+<body>
+    <div class="container p-3">
+        <h2>Json Placeholder</h2>
+        <div id="post-list" class="row g-3 p-3"></div>
+    </div>
+
+<script>
+fetch('https://jsonplaceholder.typicode.com/posts?_limit=15')
+    .then((response) => response.json())
+    .then((json => json.forEach(item => addItem(item))))
+
+function addItem(item) {
+    const template = document.getElementById('card-template').content.clonenode(true)
+        template.querySelector('.card-title').innerText = item.title
+        template.querySelector('.card-text').innerText = item.body
+        document.querySelector('#posts-list').appendChild(template)
+    } 
+</script>
+</body>
+</html>
