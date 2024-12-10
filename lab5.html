@@ -37,12 +37,15 @@
     }
     function addNewsItem(news) {
         const template = document.getElementById('news-template').content.clonenode(true)
-        template.querySelector('.card-title').innerText = news.title
-        template.querySelector('.card-text').innerText _= news.content
+        template.queryselector('.card-title').innerText = news.title
+        template.queryselector('.card-text').innerText _= news.content
         document.querySelector('#news-list').appendChild(template)
     } 
+
     getNews()
+
     let newsTimer = setInterval(getNews, 5000)
+    
     function stopInterval(){
         clearInterval(newsTimer)
     }
