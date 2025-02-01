@@ -29,10 +29,10 @@ fetch('https://jsonplaceholder.typicode.com/posts?_limit=15')
     .then((json => json.forEach(item => addItem(item))))
 
 function addItem(item) {
-    const template = document.getElementById('card-template').content.clonenode(true)
+    const template = document.getElementById('card-template').content.cloneNode(true)
         template.querySelector('.card-title').innerText = item.title
         template.querySelector('.card-text').innerText = item.body
-        document.querySelector('#posts-list').appendChild(template)
+        document.querySelector('#post-list').appendChild(template)
     } 
 </script>
 </body>

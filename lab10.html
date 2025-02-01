@@ -7,7 +7,7 @@
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">Card Title</h5>
-                <h6 class="card-sub-title mb text-secondary">Card Subtitle</h6>
+                <h6 class="card-sub-title mb-2 text-secondary">Card Subtitle</h6>
                 <p class="card-text">random text goes here</p>
                 <a href="#" class="btn btn-primary">Read more or go to link</a>
             </div>
@@ -20,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 10</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <style>
         .filters {display: flex; justify-content: space-between;}
@@ -41,8 +42,8 @@
                     <select name="sort_order" id="sort_order" onchange="sortProducts(event)">
                         <option value="id">Default Ordering</option>
                         <option value="price_lohi">Price (low to high)</option>
-                        <option value="price_highlo">Price (high to low)</option>
-                        <option value="titl_AZ">Title (A to Z)</option>
+                        <option value="price_hilo">Price (high to low)</option>
+                        <option value="titl_az">Title (A to Z)</option>
                         <option value="title_za">Title (Z to A)</option>
                     </select>
                 </label>
@@ -59,7 +60,8 @@
         let allProducts;
 
         axios.get('https://fakestoreapi.com/products')
-        .then(response => {allProducts = response.data; loadProducts(response.data); loadFilterOptions(); })
+        .then(response => {allProducts = response.data; 
+            loadProducts(response.data) loadFilterOptions(); })
 
         function loadProducts(products) {
             document.querySelector('#product-list').innerHTML = '';
@@ -71,26 +73,68 @@
                 addProduct(product);
             })
 
-            if (products.length ==0) document.querySelector('#product-list').innerHTML = '<p>No Matching Products</p>'
+            if (products.length == 0) document.querySelector('#product-list').innerHTML = '<p>No Matching Products</p>'
         }
 
         function addProduct(item) {
             const template = document.getElementById("card-template").content.cloneNode(true);
             template.querySelector('.card-title').innerText = item.title;
-            template.querySelector('.card-header').innerText = getCategoryIcon(item.category) + item.category;
-            template.querySelector('.card-subtitle').src = '$' + item.price;
+            template.querySelector('.card-header').innerHTML = getCategoryIcon(item.category) + item.category;
+            template.querySelector('.card-subtitle').innerText = '$' + item.price;
             template.querySelector('.card-image-top').src = item.image;
+            template.querySelector('.card-img-top').alt = item.title;
             template.querySelector('.card-text').innerText = item.description.substring(0,50) + '...';
             template.querySelector('.card').className = 'card' + categories.get(item.category);
-            template.querySelector('card').id = 'product' + item.id;
+            template.querySelector('.card').id = 'product' + item.id;
             template.querySelector('.btn').addEventListener('click', (e) => expandText(e, item.id, item.description));
             template.querySelector('#product-list').appendChild(template);
         }
 
         function getCategoryIcon(cat) {
             switch (cat.toLowerCase()) {
-                case "men's clothing": return '<i class="fa-solid fa-shirt"></i>'
+                case "men's clothing": return '<i class="fa-solid fa-shirt"></i>';
+                case "women's clothing": return '<i class="fa-solid fa-person-dress"></i>';
+                case "jewelery": return '<i class="fa-regular fa-gem"></i>';
+                case "electronics": return '<i class="fa-solid fa-tv"></i>';
             }
+            return '<i class="fa-brands fa-shirtsinbulk"></i>'
+        }
+
+        function loadFilterOptions() {
+            let filterSelect = document.getElementById('category_filter')
+            categories.forEach((slug, cat) => {
+                filterSelect.innerHTML += `<option value="${cat}">${cat}</option>`
+            })
+        }
+
+        function filterProducts (e) {
+            let selectedCategory = e.target.value;
+            let filteredProducts = allProducts.filter(product => product.category == selectedCategory);
+            loadProducts(filteredProducts)
+        }
+        function sortProducts(e) {
+            let selectedOrder = e.target.value;
+            let sortedProducts = [...allProducts];
+            switch (selectedOrder) {
+                case 'price_lohi' : sortedProducts.sort((p1, p2) => p1.price - p2.price); break;
+                case 'price_hilo' : sortedProducts.sort((p1, p2) => p2.price - p1.price); break;
+                case 'title_az' : sortedProducts.sort((p1, p2) => p2.title == p1.title ? 0 : (p1.title > p2.title ? 1 :-1)); break;
+                case 'title_za' : sortedProducts.sort((p1, p2) => p2.title == p1.title ? 0 : (p2.title > p1.title ? 1 :-1)); break;
+            }
+            loadProducts(sortedProducts)
+        }
+
+        function searchProducts() {
+            let searchText = document.getElementById('searchText').value.toLowerCase();
+            let filteredProducts = allProducts.filter(product => product.title.toLowerCase().indexOf(searchText) >= 0 ||
+             product.description.toLowerCase().indexOf(searchText) >= 0 || 
+             product.category.toLowerCase().indexOf(searchText) >= 0);
+            loadProducts(filteredProducts)
+        }
+
+        function expandText(e, productId, fullDescription) {
+            e.preventDefault();
+            document.querySelector('#product' + productId + '.card-text').innerText = fullDescription;
         }
     </script>
 </body>

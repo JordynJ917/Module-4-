@@ -19,25 +19,32 @@
             font-weight : 400;
             font-size : 2em
             }
+            .portfolio-items{
+                display: flex;
+            }
+            .portfolio-item{
+                padding: 2em;
+            }
         </style>
     </head>
     <body>
-        <template id="card-template" >
+        <template id="artist-template" >
             <div class="card">
                 <div class="card-body" >
                     <div class="card-title" ></div>
-                    <div class="card-text" ></div>
+                    <div class="portfolio-items" ></div>
                 </div>
             </div>
         </template >
-        <div id="card-list" ></div>
+         
         <template id = "portfolio-template">
-            <div>
-         <div class = "portfolio-item-title"></div>
-         <img class="portfolio-item-image" width="500" height="350"/>
-        </div>
+            <div class="portfolio-item">
+                    <div class = "portfolio-item-title"></div>
+                    <img class="portfolio-item-image" width="500" height="350"/>
+            </div>
         </template>    
          
+        <div id="card-list"></div>
     
     <script>
         const artist = {
@@ -59,7 +66,8 @@
             portfolio: [
                 {title: "heart", url: "https://cdn.britannica.com/72/202072-050-EDA415E9/Girl-with-Balloon-Banksy-Waterloo-Bridge-London.jpg"},
                 {title: "banana", url:"https://cdn.sanity.io/images/fvhcpakg/production/65f5493b7992d62a1017c9eef1aacf4700660f8e-1024x713.jpg?auto=format&q=60&w=1024" }
-            ]}]
+            ]}
+        ]
 
 function addArtist(title, text) {
                 const template = document.getElementById("artist-template").content.cloneNode(true);
@@ -78,14 +86,11 @@ function addArtist(title, text) {
 
         const data = [{name: 'Bob', age: 23}, {name: 'Alice', age: 39}, {name: 'Ali', age: 55}]
             function addCard(title, text) {
-                const template = document.getElementById("card-template").content.cloneNode(true);
+                const template = document.getElementById("artist-template").content.cloneNode(true);
                 template.querySelector('.card-title').innerText = title;
                 template.querySelector('.card-text').innerText = text; 
                 document.querySelector('#card-list').appendChild(template);
             }
-
-            
-
 
             data.forEach(item => addCard(item.name, item.age))
         </script>

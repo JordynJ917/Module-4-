@@ -17,7 +17,9 @@
     <div class="container p-3">
         <h2>Latest News</h2>
         <div id="news-list" class="row g-3 p-3"></div>
+
         <div><button onclick="stopInterval()">Stop Reloading</button></div>
+
         <form onsubmit="createNewsItem(event)">
             <label>News Item Title: <input name="title" id="newsTitle"></label><br>
             <label>News Item Content: <input name="content" id="newsContent"></label>
@@ -27,18 +29,28 @@
 
     <script>
     let news = [
-        { id: 1, title: 'Election Results', content: "Newly elected minister..." },
-        { id: 2, title: 'Sporting Success', content: "World Cup winners..." },
-        { id: 3, title: 'Tornado Warning', content: "Residents should prepare..." }
+        { 
+            id: 1, title: 'Election Results', 
+            content: "Newly elected minister..." 
+        },
+        { 
+            id: 2, title: 'Sporting Success', 
+            content: "World Cup winners..." 
+        },
+        { 
+            id: 3, title: 'Tornado Warning', 
+            content: "Residents should prepare..." 
+        }
     ];
     function getNews() {
         document.getElementById('news-list').innerText='';
-        news.forEach(item => addNewItem(item))
+
+        news.forEach(item => addNewsItem(item))
     }
     function addNewsItem(news) {
-        const template = document.getElementById('news-template').content.clonenode(true)
-        template.queryselector('.card-title').innerText = news.title
-        template.queryselector('.card-text').innerText _= news.content
+        const template = document.getElementById('news-template').content.cloneNode(true)
+        template.querySelector('.card-title').innerText = news.title
+        template.querySelector('.card-text').innerText = news.content
         document.querySelector('#news-list').appendChild(template)
     } 
 
@@ -46,7 +58,14 @@
 
     let newsTimer = setInterval(getNews, 5000)
     
-    function stopInterval(){
+    function createNewsItem(event) {
+        event.preventDefault()
+        let newTitle = document.getElementById('newsTitle').value
+        let newContent = document.getElementById('newsContent').value
+        news.push({title: newTitle, content: newContent, id: news.length + 1})
+    }
+
+    function stopInterval() {
         clearInterval(newsTimer)
     }
     </script>
