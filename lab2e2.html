@@ -38,9 +38,10 @@
                 const template = document.getElementById("card-template").content.cloneNode(true);
                 template.querySelector('.card-title').innerText = title;
                 template.querySelector('.card-text').innerText = text; 
+
                 document.querySelector('#card-list').appendChild(template);
             }
-            data.forEach(item => addCard(item.name, item.age))
+            data.forEach(item => addCard(item.name, item.age));
         </script>
     </body>
 </html>
